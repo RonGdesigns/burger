@@ -11,7 +11,8 @@
         font-family: 'Helvetica Neue', Arial, sans-serif;
         background-color: #f4f4f0;
         color: #111;
-        overflow-x: hidden;
+        overflow-x: hidden; /* Prevents unwanted horizontal scrolling */
+        width: 100%;
     }
 
     header {
@@ -50,6 +51,7 @@
     /* --- Sections --- */
     .hero {
         height: 100vh;
+        width: 100vw; /* Ensures background fills the width */
         display: flex;
         flex-direction: column;
         justify-content: center;
@@ -59,6 +61,12 @@
         color: white;
         position: relative;
         overflow: hidden;
+    }
+
+    .hero-subtext {
+        font-size: 2vw; 
+        margin-top: 20px; 
+        font-weight: bold;
     }
 
     .marquee-container {
@@ -189,7 +197,6 @@
         animation: float-reverse 5s ease-in-out infinite;
     }
 
-    /* NEW: Positioning for the giant floating fry */
     .fry-over-sides {
         width: 160px;
         top: -60px;
@@ -275,6 +282,42 @@
         }
     }
 
+    /* --- NEW: MOBILE OPTIMIZATIONS (Max-width 768px) --- */
+    @media (max-width: 768px) {
+        .hero {
+            width: 100%; /* Fixes the orange background alignment */
+        }
+        
+        .hero .massive-text {
+            font-size: 15vw; /* Significantly larger on mobile */
+        }
+
+        .hero-subtext {
+            font-size: 5vw; /* Larger subtext for mobile readability */
+            padding: 0 20px;
+        }
+
+        /* Shift Burger Top Left even more to the left */
+        .burger-top-left {
+            left: -10%;
+            width: 140px;
+        }
+
+        /* Shift Burger Bottom Right even more to the right */
+        .burger-bottom-right {
+            right: -10%;
+            width: 180px;
+        }
+
+        header {
+            padding: 20px;
+        }
+
+        .section {
+            padding: 60px 20px;
+        }
+    }
+
 </style>
 </head>
 <body>
@@ -292,12 +335,12 @@
     
     <div style="z-index: 10;">
         <h1 class="massive-text">I'm Stuffed!</h1>
-        <p style="font-size: 2vw; margin-top: 20px; font-weight: bold;">Let me show you where flavor can go.</p>
+        <p class="hero-subtext">Let me show you where flavor can go.</p>
     </div>
 </div>
 
 <div class="marquee-container">
-    <h2 style="font-size: 3rem; margin: 0;">SMASHBURGERS • FRIES • SHAKES • SIDES • COMBOS • SMASHBURGERS • FRIES • SHAKES • SIDES • COMBOS • </h2>
+    <h2 style="font-size: 3rem; margin: 0;">SMASHBURGERS • FRIES • SHAKES • SIDES • COMBOS • </h2>
 </div>
 
 <div class="section">
@@ -334,7 +377,6 @@
 
         <div class="product-card" style="background: #222; color: white;">
             <img src="giant-fry.png" alt="Giant Floating Fry" class="floating-decor fry-over-sides">
-            
             <img src="onionrings.png" alt="Crispy Onion Rings" class="card-img">
             <h3>Crispy Onion Rings</h3>
             <p>Beer-battered and fried to golden perfection.</p>
@@ -365,15 +407,12 @@
         const checkoutMessage = document.getElementById('checkout-message');
         const burgerContainer = document.getElementById('burger-storm-container');
 
-        // Add items to bag
         orderButtons.forEach(button => {
             button.addEventListener('click', (event) => {
                 event.preventDefault(); 
-                
                 if (currentItems < 99) {
                     currentItems++;
                     bagCountDisplay.textContent = currentItems;
-                    
                     bagCountDisplay.classList.remove('bump-anim');
                     void bagCountDisplay.offsetWidth; 
                     bagCountDisplay.classList.add('bump-anim');
@@ -381,44 +420,33 @@
             });
         });
 
-        // Open checkout overlay
         bagIcon.addEventListener('click', () => {
             if (currentItems === 0) {
                 alert("Your bag is empty! Add some burgers first.");
                 return;
             }
-
             checkoutScreen.style.display = 'flex';
             checkoutMessage.textContent = `You ordered ${currentItems} items!`;
             checkoutMessage.style.display = 'block';
 
-            // Throw the burgers!
             for (let i = 0; i < currentItems; i++) {
                 setTimeout(() => {
                     const thrownBurger = document.createElement('img');
                     thrownBurger.src = 'transparent-burger.png.gif';
                     thrownBurger.classList.add('thrown-burger');
-
                     const randomX = (Math.random() - 0.5) * 20; 
                     const randomY = (Math.random() - 0.5) * 20;
                     thrownBurger.style.left = `calc(50% + ${randomX}%)`;
                     thrownBurger.style.top = `calc(50% + ${randomY}%)`;
-
                     burgerContainer.appendChild(thrownBurger);
-
-                    setTimeout(() => {
-                        thrownBurger.remove();
-                    }, 1500);
-
+                    setTimeout(() => { thrownBurger.remove(); }, 1500);
                 }, i * 350); 
             }
         });
 
-        // Close the overlay AND reset the bag counter
         checkoutScreen.addEventListener('click', () => {
             checkoutScreen.style.display = 'none';
             burgerContainer.innerHTML = ''; 
-            
             currentItems = 0;
             bagCountDisplay.textContent = currentItems;
         });
