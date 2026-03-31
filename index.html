@@ -118,7 +118,7 @@
         100% { transform: translateY(0px) rotate(0deg); }
     }
 
-    /* Custom animation for the mirrored burger to keep it flipped while floating */
+    /* Custom animation for the mirrored burger */
     @keyframes float-mirrored {
         0% { transform: translateY(0px) scaleX(-1) rotate(0deg); }
         50% { transform: translateY(-20px) scaleX(-1) rotate(-4deg); }
@@ -144,7 +144,7 @@
         filter: drop-shadow(0px 15px 15px rgba(0,0,0,0.2));
     }
 
-    /* Top Left Burger */
+    /* Top Left Burger in Hero */
     .burger-top-left {
         width: 180px;
         top: 15%;
@@ -152,15 +152,15 @@
         animation: float-reverse 8s ease-in-out infinite; 
     }
 
-    /* Bottom Right Mirrored Burger (Larger) */
+    /* Bottom Right Mirrored Burger in Hero */
     .burger-bottom-right {
-        width: 250px; /* Made slightly bigger */
+        width: 250px; 
         bottom: 15%;
         right: 5%;
-        animation: float-mirrored 7s ease-in-out infinite; /* Uses the specific mirrored keyframe */
+        animation: float-mirrored 7s ease-in-out infinite; 
     }
 
-    /* Splat sauce positioned over the first choice */
+    /* Splat sauce over the first choice */
     .splat-over-first {
         width: 250px;
         top: -50px;
@@ -168,35 +168,21 @@
         animation: float-reverse 5s ease-in-out infinite;
     }
 
-    /* The original transparent Burger GIF over the second choice */
-    .burger-over-second {
-        width: 220px;
-        top: -60px;
-        right: -30px;
-        animation: float 6s ease-in-out infinite;
+    /* Styles for the new product images in the cards */
+    .card-img {
+        display: block;
+        width: 100%;
+        max-width: 220px;
+        height: auto;
+        object-fit: contain;
+        margin: 0 auto 20px auto;
+        filter: drop-shadow(0px 8px 8px rgba(0,0,0,0.1));
+    }
+    .swiss-burger-desc {
+        font-style: italic;
+        margin-bottom: 20px;
     }
 
-    /* Giant fry positioned over the third choice */
-    .fry-over-third {
-        width: 300px;
-        top: -80px; 
-        right: -40px; 
-        animation: float 7s ease-in-out infinite;
-        transform-origin: center;
-    }
-    
-    .card-img-placeholder {
-        width: 150px;
-        height: 150px;
-        background: #eee;
-        border-radius: 50%;
-        margin: 0 auto 20px auto;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        color: #999;
-        font-size: 0.8rem;
-    }
 </style>
 </head>
 <body>
@@ -229,20 +215,18 @@
     
     <div class="product-grid">
         <div class="product-card">
-            <img src="splat-sauce.gif" alt="Splat Sauce" class="floating-decor splat-over-first">
+            <img src="splat-sauce.png" alt="Splat Sauce" class="floating-decor splat-over-first">
             
-            <div class="card-img-placeholder">Burger Img</div>
+            <img src="cheeseburger.png" alt="Cheeseburger" class="card-img">
             <h3>Double Smashburgers</h3>
             <p>Two crispy patties, melted cheese, secret sauce.</p>
             <a href="#" class="btn">Order</a>
         </div>
 
         <div class="product-card">
-            <img src="transparent-burger.png.gif" alt="Floating Burger GIF" class="floating-decor burger-over-second">
-
-            <div class="card-img-placeholder">Fries Img</div>
-            <h3>Loaded Waffle Fries</h3>
-            <p>Smothered in cheese sauce and chopped bacon.</p>
+            <img src="swissburger.png" alt="Swiss Burger" class="card-img">
+            <h3>Swiss Burger</h3>
+            <p class="swiss-burger-desc">Beef patty, Swiss cheese, sautéed mushrooms, and grilled onions.</p>
             <a href="#" class="btn">Order</a>
         </div>
     </div>
@@ -253,16 +237,14 @@
     
     <div class="product-grid">
         <div class="product-card" style="background: #222; color: white;">
-            <img src="giant-fry.png" alt="Giant Fry" class="floating-decor fry-over-third">
-            
-            <div class="card-img-placeholder" style="background: #333;">Shake Img</div>
+            <img src="shake.png" alt="Hand-Spun Shake" class="card-img">
             <h3>Hand-Spun Shakes</h3>
             <p>Thick, creamy, and made with real ice cream.</p>
             <a href="#" class="btn" style="background: white; color: black;">Order</a>
         </div>
 
         <div class="product-card" style="background: #222; color: white;">
-            <div class="card-img-placeholder" style="background: #333;">Rings Img</div>
+            <img src="onionrings.png" alt="Crispy Onion Rings" class="card-img">
             <h3>Crispy Onion Rings</h3>
             <p>Beer-battered and fried to golden perfection.</p>
             <a href="#" class="btn" style="background: white; color: black;">Order</a>
