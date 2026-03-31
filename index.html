@@ -27,6 +27,14 @@
         font-weight: bold;
     }
 
+    #bag-icon {
+        cursor: pointer;
+        transition: transform 0.2s;
+    }
+    #bag-icon:hover {
+        transform: scale(1.1);
+    }
+
     /* --- Typography --- */
     .massive-text {
         font-size: 8vw;
@@ -125,20 +133,19 @@
         100% { transform: translateY(0px) scaleX(-1) rotate(0deg); }
     }
 
-    /* --- NEW: Bag Counter Animations --- */
+    /* --- Bag Counter Animations --- */
     #bag-count {
-        display: inline-block; /* Required for CSS transforms to work on text */
+        display: inline-block; 
         transition: transform 0.1s;
     }
 
     .bump-anim {
-        /* Uses a bouncy easing curve to make it feel playful */
         animation: bagBump 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275); 
     }
 
     @keyframes bagBump {
         0% { transform: scale(1); }
-        40% { transform: scale(1.6) translateY(-2px); color: #ff4500; } /* Pops up and turns orange */
+        40% { transform: scale(1.6) translateY(-2px); color: #ff4500; } 
         100% { transform: scale(1); color: inherit; }
     }
 
@@ -198,6 +205,68 @@
         margin-bottom: 20px;
     }
 
+    /* --- Checkout Screen Overlay --- */
+    .checkout-overlay {
+        position: fixed;
+        top: 0; 
+        left: 0; 
+        width: 100vw; 
+        height: 100vh;
+        background-color: #ff4500; /* UPDATED: Brand orange background */
+        z-index: 9999; 
+        display: none; 
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        overflow: hidden;
+        cursor: pointer; /* UPDATED: Shows users they can click anywhere to close */
+    }
+
+    .checkout-backdrop {
+        position: absolute;
+        top: 0; 
+        left: 0; 
+        width: 100%; 
+        height: 100%;
+        object-fit: cover;
+        opacity: 0.15; /* Lowered opacity so the orange really pops through */
+        z-index: 1;
+    }
+
+    .checkout-message {
+        position: relative;
+        z-index: 10;
+        color: white;
+        font-size: 5vw;
+        font-weight: 900;
+        text-transform: uppercase;
+        text-align: center;
+        text-shadow: 0px 10px 20px rgba(0,0,0,0.5);
+    }
+
+    .thrown-burger {
+        position: absolute;
+        z-index: 5;
+        width: 150px;
+        top: 50%; 
+        left: 50%;
+        animation: throwAtCamera 1.5s cubic-bezier(0.1, 0.8, 0.2, 1) forwards;
+    }
+
+    @keyframes throwAtCamera {
+        0% { 
+            transform: translate(-50%, -50%) scale(0) rotate(-45deg); 
+            opacity: 0; 
+        }
+        20% { 
+            opacity: 1; 
+        }
+        100% { 
+            transform: translate(-50%, -50%) scale(6) rotate(25deg); 
+            opacity: 0; 
+        }
+    }
+
 </style>
 </head>
 <body>
@@ -205,7 +274,7 @@
 <header>
     <div>Menu</div>
     <div style="font-weight: 900; font-size: 1.2rem; letter-spacing: 1px;">FLYING BURGERS</div>
-    <div>Bag (<span id="bag-count">0</span>)</div>
+    <div id="bag-icon">Bag (<span id="bag-count">0</span>)</div>
 </header>
 
 <div class="hero">
@@ -229,7 +298,6 @@
     <div class="product-grid">
         <div class="product-card">
             <img src="splat-sauce.gif" alt="Splat Sauce" class="floating-decor splat-over-first">
-            
             <img src="cheeseburger.png" alt="Cheeseburger" class="card-img">
             <h3>Double Smashburgers</h3>
             <p>Two crispy patties, melted cheese, secret sauce.</p>
@@ -270,12 +338,24 @@
     <p style="margin-top: 50px; font-weight: bold; font-size: 1.2rem;">Thanks for dining with us.</p>
 </div>
 
+<div id="checkout-screen" class="checkout-overlay">
+    <img src="backdrop.png" alt="Backdrop" class="checkout-backdrop">
+    <div id="checkout-message" class="checkout-message">You ordered 0 items!</div>
+    <div id="burger-storm-container"></div>
+</div>
+
 <script>
     document.addEventListener('DOMContentLoaded', () => {
         let currentItems = 0;
+        const bagIcon = document.getElementById('bag-icon');
         const bagCountDisplay = document.getElementById('bag-count');
         const orderButtons = document.querySelectorAll('.add-to-bag');
+        
+        const checkoutScreen = document.getElementById('checkout-screen');
+        const checkoutMessage = document.getElementById('checkout-message');
+        const burgerContainer = document.getElementById('burger-storm-container');
 
+        // Add items to bag
         orderButtons.forEach(button => {
             button.addEventListener('click', (event) => {
                 event.preventDefault(); 
@@ -284,17 +364,51 @@
                     currentItems++;
                     bagCountDisplay.textContent = currentItems;
                     
-                    // Trigger the bump animation
-                    // First, we remove the class in case they click rapidly
                     bagCountDisplay.classList.remove('bump-anim');
-                    
-                    // We trigger a quick "reflow" so the browser knows to restart the animation
                     void bagCountDisplay.offsetWidth; 
-                    
-                    // Add the class back to fire the animation
                     bagCountDisplay.classList.add('bump-anim');
                 }
             });
+        });
+
+        // Open checkout overlay
+        bagIcon.addEventListener('click', () => {
+            if (currentItems === 0) {
+                alert("Your bag is empty! Add some burgers first.");
+                return;
+            }
+
+            checkoutScreen.style.display = 'flex';
+            checkoutMessage.textContent = `You ordered ${currentItems} items!`;
+            checkoutMessage.style.display = 'block';
+
+            // Throw the burgers!
+            for (let i = 0; i < currentItems; i++) {
+                setTimeout(() => {
+                    const thrownBurger = document.createElement('img');
+                    thrownBurger.src = 'transparent-burger.png.gif';
+                    thrownBurger.classList.add('thrown-burger');
+
+                    const randomX = (Math.random() - 0.5) * 20; 
+                    const randomY = (Math.random() - 0.5) * 20;
+                    thrownBurger.style.left = `calc(50% + ${randomX}%)`;
+                    thrownBurger.style.top = `calc(50% + ${randomY}%)`;
+
+                    burgerContainer.appendChild(thrownBurger);
+
+                    setTimeout(() => {
+                        thrownBurger.remove();
+                    }, 1500);
+
+                }, i * 350); 
+            }
+        });
+
+        // UPDATED: Close the overlay when clicking anywhere on it
+        checkoutScreen.addEventListener('click', () => {
+            checkoutScreen.style.display = 'none';
+            // Clear out any flying burgers immediately so they don't pile up in the background
+            burgerContainer.innerHTML = ''; 
         });
     });
 </script>
