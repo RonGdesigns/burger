@@ -118,6 +118,13 @@
         100% { transform: translateY(0px) rotate(0deg); }
     }
 
+    /* Custom animation for the mirrored burger to keep it flipped while floating */
+    @keyframes float-mirrored {
+        0% { transform: translateY(0px) scaleX(-1) rotate(0deg); }
+        50% { transform: translateY(-20px) scaleX(-1) rotate(-4deg); }
+        100% { transform: translateY(0px) scaleX(-1) rotate(0deg); }
+    }
+
     /* --- Image Positioning & Classes --- */
     .hero-burger {
         position: absolute;
@@ -137,12 +144,20 @@
         filter: drop-shadow(0px 15px 15px rgba(0,0,0,0.2));
     }
 
-    /* NEW: The duplicated GIF for the top left of the screen */
+    /* Top Left Burger */
     .burger-top-left {
         width: 180px;
         top: 15%;
         left: 5%;
-        animation: float-reverse 8s ease-in-out infinite; /* Slower, reverse animation */
+        animation: float-reverse 8s ease-in-out infinite; 
+    }
+
+    /* Bottom Right Mirrored Burger (Larger) */
+    .burger-bottom-right {
+        width: 250px; /* Made slightly bigger */
+        bottom: 15%;
+        right: 5%;
+        animation: float-mirrored 7s ease-in-out infinite; /* Uses the specific mirrored keyframe */
     }
 
     /* Splat sauce positioned over the first choice */
@@ -194,6 +209,8 @@
 
 <div class="hero">
     <img src="transparent-burger.png.gif" alt="Floating Burger GIF" class="floating-decor burger-top-left">
+
+    <img src="transparent-burger.png.gif" alt="Floating Mirrored Burger GIF" class="floating-decor burger-bottom-right">
 
     <img src="burger.png" alt="Giant Floating Burger" class="hero-burger">
     
