@@ -103,6 +103,7 @@
         font-weight: bold;
         display: inline-block;
         margin-top: 20px;
+        cursor: pointer;
     }
 
     /* --- Animations --- */
@@ -178,6 +179,7 @@
         margin: 0 auto 20px auto;
         filter: drop-shadow(0px 8px 8px rgba(0,0,0,0.1));
     }
+    
     .swiss-burger-desc {
         font-style: italic;
         margin-bottom: 20px;
@@ -190,14 +192,12 @@
 <header>
     <div>Menu</div>
     <div style="font-weight: 900; font-size: 1.2rem; letter-spacing: 1px;">FLYING BURGERS</div>
-    <div>Bag (0)</div>
+    <div>Bag (<span id="bag-count">0</span>)</div>
 </header>
 
 <div class="hero">
     <img src="transparent-burger.png.gif" alt="Floating Burger GIF" class="floating-decor burger-top-left">
-
     <img src="transparent-burger.png.gif" alt="Floating Mirrored Burger GIF" class="floating-decor burger-bottom-right">
-
     <img src="burger.png" alt="Giant Floating Burger" class="hero-burger">
     
     <div style="z-index: 10;">
@@ -216,18 +216,17 @@
     <div class="product-grid">
         <div class="product-card">
             <img src="splat-sauce.png" alt="Splat Sauce" class="floating-decor splat-over-first">
-            
             <img src="cheeseburger.png" alt="Cheeseburger" class="card-img">
             <h3>Double Smashburgers</h3>
             <p>Two crispy patties, melted cheese, secret sauce.</p>
-            <a href="#" class="btn">Order</a>
+            <a href="#" class="btn add-to-bag">Order</a>
         </div>
 
         <div class="product-card">
             <img src="swissburger.png" alt="Swiss Burger" class="card-img">
             <h3>Swiss Burger</h3>
             <p class="swiss-burger-desc">Beef patty, Swiss cheese, sautéed mushrooms, and grilled onions.</p>
-            <a href="#" class="btn">Order</a>
+            <a href="#" class="btn add-to-bag">Order</a>
         </div>
     </div>
 </div>
@@ -240,14 +239,14 @@
             <img src="shake.png" alt="Hand-Spun Shake" class="card-img">
             <h3>Hand-Spun Shakes</h3>
             <p>Thick, creamy, and made with real ice cream.</p>
-            <a href="#" class="btn" style="background: white; color: black;">Order</a>
+            <a href="#" class="btn add-to-bag" style="background: white; color: black;">Order</a>
         </div>
 
         <div class="product-card" style="background: #222; color: white;">
             <img src="onionrings.png" alt="Crispy Onion Rings" class="card-img">
             <h3>Crispy Onion Rings</h3>
             <p>Beer-battered and fried to golden perfection.</p>
-            <a href="#" class="btn" style="background: white; color: black;">Order</a>
+            <a href="#" class="btn add-to-bag" style="background: white; color: black;">Order</a>
         </div>
     </div>
 </div>
@@ -256,6 +255,28 @@
     <h2 class="massive-text" style="font-size: 5vw;">Whatever craving you want to crush<br>Flying Burgers is your ticket to get there.</h2>
     <p style="margin-top: 50px; font-weight: bold; font-size: 1.2rem;">Thanks for dining with us.</p>
 </div>
+
+<script>
+    document.addEventListener('DOMContentLoaded', () => {
+        let currentItems = 0;
+        const bagCountDisplay = document.getElementById('bag-count');
+        
+        // Select all order buttons (I added the 'add-to-bag' class to them specifically)
+        const orderButtons = document.querySelectorAll('.add-to-bag');
+
+        orderButtons.forEach(button => {
+            button.addEventListener('click', (event) => {
+                event.preventDefault(); // Stops the page from jumping to the top when clicked
+                
+                // Only increase the number if it is under 99
+                if (currentItems < 99) {
+                    currentItems++;
+                    bagCountDisplay.textContent = currentItems;
+                }
+            });
+        });
+    });
+</script>
 
 </body>
 </html>
