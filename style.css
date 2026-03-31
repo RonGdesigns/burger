@@ -18,3 +18,13 @@
     animation: float 5s ease-in-out infinite; /* 5 seconds, repeats forever */
     filter: drop-shadow(0px 15px 10px rgba(0,0,0,0.2)); /* Adds a dynamic shadow */
 }
+.bg-floater {
+    position: absolute;
+    z-index: -1; /* Keeps it behind your text and buttons */
+    opacity: 0.5;
+    filter: blur(5px);
+    animation: float 8s ease-in-out infinite;
+}
+
+.floater-1 { top: 10%; left: -5%; width: 400px; }
+.floater-2 { top: 60%; right: -10%; width: 500px; animation-delay: 2s; } /* Delay makes them out of sync */
