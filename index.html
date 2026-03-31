@@ -11,7 +11,7 @@
         font-family: 'Helvetica Neue', Arial, sans-serif;
         background-color: #f4f4f0;
         color: #111;
-        overflow-x: hidden; /* Prevents horizontal scrolling from floating images */
+        overflow-x: hidden;
     }
 
     header {
@@ -21,7 +21,7 @@
         position: fixed;
         width: 100%;
         box-sizing: border-box;
-        mix-blend-mode: difference; /* Makes text visible on any background */
+        mix-blend-mode: difference;
         color: white;
         z-index: 100;
         font-weight: bold;
@@ -47,7 +47,7 @@
         justify-content: center;
         align-items: center;
         text-align: center;
-        background-color: #ff4500; /* Vibrant burger brand color */
+        background-color: #ff4500;
         color: white;
         position: relative;
         overflow: hidden;
@@ -67,7 +67,7 @@
         display: flex;
         flex-direction: column;
         gap: 60px;
-        position: relative; /* Crucial for absolute positioning of background images */
+        position: relative;
     }
 
     /* --- Products --- */
@@ -123,7 +123,7 @@
         position: absolute;
         width: 60vw;
         max-width: 600px;
-        bottom: -10%; /* Hangs slightly off the bottom of the hero */
+        bottom: -10%;
         right: -5%;
         z-index: 1;
         animation: float 6s ease-in-out infinite;
@@ -132,17 +132,25 @@
 
     .floating-decor {
         position: absolute;
-        z-index: 20; /* Places it OVER the product cards */
-        pointer-events: none; /* Prevents the image from blocking clicks on the order button */
+        z-index: 20; 
+        pointer-events: none; 
         filter: drop-shadow(0px 15px 15px rgba(0,0,0,0.2));
     }
 
     /* Splat sauce positioned over the first choice */
     .splat-over-first {
         width: 250px;
-        top: -50px; /* Pulls it up over the top edge of the card */
-        left: -30px; /* Pulls it slightly to the left */
+        top: -50px;
+        left: -30px;
         animation: float-reverse 5s ease-in-out infinite;
+    }
+
+    /* NEW: Transparent Burger GIF over the second choice (Waffle Fries) */
+    .burger-over-second {
+        width: 220px;
+        top: -60px;
+        right: -30px;
+        animation: float 6s ease-in-out infinite;
     }
 
     /* Giant fry positioned over the third choice */
@@ -154,7 +162,6 @@
         transform-origin: center;
     }
     
-    /* Small placeholder images inside the cards (optional) */
     .card-img-placeholder {
         width: 150px;
         height: 150px;
@@ -178,7 +185,7 @@
 </header>
 
 <div class="hero">
-    <img src="transparent-burger.png.gif" alt="Giant Floating Burger" class="hero-burger">
+    <img src="burger.png" alt="Giant Floating Burger" class="hero-burger">
     
     <div style="z-index: 10;">
         <h1 class="massive-text">I'm Stuffed!</h1>
@@ -195,7 +202,7 @@
     
     <div class="product-grid">
         <div class="product-card">
-            <img src="splat-sauce.gif" alt="Splat Sauce" class="floating-decor splat-over-first">
+            <img src="splat-sauce.png" alt="Splat Sauce" class="floating-decor splat-over-first">
             
             <div class="card-img-placeholder">Burger Img</div>
             <h3>Double Smashburgers</h3>
@@ -204,6 +211,8 @@
         </div>
 
         <div class="product-card">
+            <img src="transparent-burger.png.gif" alt="Floating Burger GIF" class="floating-decor burger-over-second">
+
             <div class="card-img-placeholder">Fries Img</div>
             <h3>Loaded Waffle Fries</h3>
             <p>Smothered in cheese sauce and chopped bacon.</p>
