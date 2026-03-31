@@ -106,7 +106,7 @@
         cursor: pointer;
     }
 
-    /* --- Animations --- */
+    /* --- Floating Animations --- */
     @keyframes float {
         0% { transform: translateY(0px) rotate(0deg); }
         50% { transform: translateY(-20px) rotate(3deg); }
@@ -119,11 +119,27 @@
         100% { transform: translateY(0px) rotate(0deg); }
     }
 
-    /* Custom animation for the mirrored burger */
     @keyframes float-mirrored {
         0% { transform: translateY(0px) scaleX(-1) rotate(0deg); }
         50% { transform: translateY(-20px) scaleX(-1) rotate(-4deg); }
         100% { transform: translateY(0px) scaleX(-1) rotate(0deg); }
+    }
+
+    /* --- NEW: Bag Counter Animations --- */
+    #bag-count {
+        display: inline-block; /* Required for CSS transforms to work on text */
+        transition: transform 0.1s;
+    }
+
+    .bump-anim {
+        /* Uses a bouncy easing curve to make it feel playful */
+        animation: bagBump 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275); 
+    }
+
+    @keyframes bagBump {
+        0% { transform: scale(1); }
+        40% { transform: scale(1.6) translateY(-2px); color: #ff4500; } /* Pops up and turns orange */
+        100% { transform: scale(1); color: inherit; }
     }
 
     /* --- Image Positioning & Classes --- */
@@ -145,7 +161,6 @@
         filter: drop-shadow(0px 15px 15px rgba(0,0,0,0.2));
     }
 
-    /* Top Left Burger in Hero */
     .burger-top-left {
         width: 180px;
         top: 15%;
@@ -153,7 +168,6 @@
         animation: float-reverse 8s ease-in-out infinite; 
     }
 
-    /* Bottom Right Mirrored Burger in Hero */
     .burger-bottom-right {
         width: 250px; 
         bottom: 15%;
@@ -161,7 +175,6 @@
         animation: float-mirrored 7s ease-in-out infinite; 
     }
 
-    /* Splat sauce over the first choice */
     .splat-over-first {
         width: 250px;
         top: -50px;
@@ -169,14 +182,13 @@
         animation: float-reverse 5s ease-in-out infinite;
     }
 
-    /* UPDATED: Styles to circularly crop the images focused on the middle */
     .card-img {
         display: block;
-        width: 220px; /* Fixed square dimensions for circle */
+        width: 220px; 
         height: 220px;
-        border-radius: 50%; /* The circle crop */
-        object-fit: cover; /* Fill container, crop edges */
-        object-position: center; /* Center the crop on the 'middle' */
+        border-radius: 50%; 
+        object-fit: cover; 
+        object-position: center; 
         margin: 0 auto 20px auto;
         filter: drop-shadow(0px 8px 8px rgba(0,0,0,0.1));
     }
@@ -266,12 +278,21 @@
 
         orderButtons.forEach(button => {
             button.addEventListener('click', (event) => {
-                event.preventDefault(); // Stops the page from jumping
+                event.preventDefault(); 
                 
-                // Increase number up to max of 99
                 if (currentItems < 99) {
                     currentItems++;
                     bagCountDisplay.textContent = currentItems;
+                    
+                    // Trigger the bump animation
+                    // First, we remove the class in case they click rapidly
+                    bagCountDisplay.classList.remove('bump-anim');
+                    
+                    // We trigger a quick "reflow" so the browser knows to restart the animation
+                    void bagCountDisplay.offsetWidth; 
+                    
+                    // Add the class back to fire the animation
+                    bagCountDisplay.classList.add('bump-anim');
                 }
             });
         });
