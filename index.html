@@ -5,13 +5,15 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Flying Burgers</title>
 <style>
+    /* --- Base Styles --- */
     body {
         margin: 0;
         font-family: 'Helvetica Neue', Arial, sans-serif;
         background-color: #f4f4f0;
         color: #111;
-        overflow-x: hidden;
+        overflow-x: hidden; /* Prevents horizontal scrolling from floating images */
     }
+
     header {
         display: flex;
         justify-content: space-between;
@@ -19,10 +21,25 @@
         position: fixed;
         width: 100%;
         box-sizing: border-box;
-        mix-blend-mode: difference;
+        mix-blend-mode: difference; /* Makes text visible on any background */
         color: white;
         z-index: 100;
+        font-weight: bold;
     }
+
+    /* --- Typography --- */
+    .massive-text {
+        font-size: 8vw;
+        font-weight: 900;
+        line-height: 0.9;
+        text-transform: uppercase;
+        margin: 0;
+        letter-spacing: -2px;
+        position: relative;
+        z-index: 10;
+    }
+
+    /* --- Sections --- */
     .hero {
         height: 100vh;
         display: flex;
@@ -32,15 +49,10 @@
         text-align: center;
         background-color: #ff4500; /* Vibrant burger brand color */
         color: white;
+        position: relative;
+        overflow: hidden;
     }
-    .massive-text {
-        font-size: 8vw;
-        font-weight: 900;
-        line-height: 0.9;
-        text-transform: uppercase;
-        margin: 0;
-        letter-spacing: -2px;
-    }
+
     .marquee-container {
         display: flex;
         overflow: hidden;
@@ -49,27 +61,38 @@
         background: #111;
         color: white;
     }
+
     .section {
         padding: 100px 40px;
         display: flex;
         flex-direction: column;
-        gap: 40px;
+        gap: 60px;
+        position: relative; /* Crucial for absolute positioning of background images */
     }
+
+    /* --- Products --- */
     .product-grid {
         display: grid;
         grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-        gap: 20px;
+        gap: 40px;
+        position: relative;
+        z-index: 10;
     }
+
     .product-card {
         background: white;
         border-radius: 20px;
-        padding: 40px;
+        padding: 60px 40px 40px 40px;
         text-align: center;
         transition: transform 0.3s ease;
+        position: relative;
+        box-shadow: 0 10px 30px rgba(0,0,0,0.05);
     }
+
     .product-card:hover {
         transform: translateY(-10px);
     }
+
     .btn {
         background: #111;
         color: white;
@@ -78,6 +101,71 @@
         text-decoration: none;
         text-transform: uppercase;
         font-weight: bold;
+        display: inline-block;
+        margin-top: 20px;
+    }
+
+    /* --- Animations --- */
+    @keyframes float {
+        0% { transform: translateY(0px) rotate(0deg); }
+        50% { transform: translateY(-20px) rotate(3deg); }
+        100% { transform: translateY(0px) rotate(0deg); }
+    }
+
+    @keyframes float-reverse {
+        0% { transform: translateY(0px) rotate(0deg); }
+        50% { transform: translateY(-15px) rotate(-4deg); }
+        100% { transform: translateY(0px) rotate(0deg); }
+    }
+
+    /* --- Image Positioning & Classes --- */
+    .hero-burger {
+        position: absolute;
+        width: 60vw;
+        max-width: 600px;
+        bottom: -10%; /* Hangs slightly off the bottom of the hero */
+        right: -5%;
+        z-index: 1;
+        animation: float 6s ease-in-out infinite;
+        filter: drop-shadow(0px 20px 20px rgba(0,0,0,0.3));
+    }
+
+    .floating-decor {
+        position: absolute;
+        z-index: 20; /* Places it OVER the product cards */
+        pointer-events: none; /* Prevents the image from blocking clicks on the order button */
+        filter: drop-shadow(0px 15px 15px rgba(0,0,0,0.2));
+    }
+
+    /* Splat sauce positioned over the first choice */
+    .splat-over-first {
+        width: 250px;
+        top: -50px; /* Pulls it up over the top edge of the card */
+        left: -30px; /* Pulls it slightly to the left */
+        animation: float-reverse 5s ease-in-out infinite;
+    }
+
+    /* Giant fry positioned over the third choice */
+    .fry-over-third {
+        width: 300px;
+        top: -80px; 
+        right: -40px; 
+        animation: float 7s ease-in-out infinite;
+        transform-origin: center;
+    }
+    
+    /* Small placeholder images inside the cards (optional) */
+    .card-img-placeholder {
+        width: 150px;
+        height: 150px;
+        background: #eee;
+        border-radius: 50%;
+        margin: 0 auto 20px auto;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        color: #999;
+        font-size: 0.8rem;
     }
 </style>
 </head>
@@ -85,58 +173,71 @@
 
 <header>
     <div>Menu</div>
-    <div style="font-weight: 900; font-size: 1.2rem;">FLYING BURGERS</div>
+    <div style="font-weight: 900; font-size: 1.2rem; letter-spacing: 1px;">FLYING BURGERS</div>
     <div>Bag (0)</div>
 </header>
 
 <div class="hero">
-    <h1 class="massive-text">I'm Stuffed!</h1>
-    <p style="font-size: 2vw; margin-top: 20px;">Let me show you where flavor can go.</p>
+    <img src="burger.png" alt="Giant Floating Burger" class="hero-burger">
+    
+    <div style="z-index: 10;">
+        <h1 class="massive-text">I'm Stuffed!</h1>
+        <p style="font-size: 2vw; margin-top: 20px; font-weight: bold;">Let me show you where flavor can go.</p>
+    </div>
 </div>
 
 <div class="marquee-container">
-    <h2 style="font-size: 3rem; margin: 0;">SMASHBURGERS • FRIES • SHAKES • SIDES • COMBOS • </h2>
+    <h2 style="font-size: 3rem; margin: 0;">SMASHBURGERS • FRIES • SHAKES • SIDES • COMBOS • SMASHBURGERS • FRIES • SHAKES • SIDES • COMBOS • </h2>
 </div>
 
 <div class="section">
     <h2 class="massive-text" style="font-size: 6vw;">How about transcending<br>the power of hunger,<br>right now?</h2>
+    
     <div class="product-grid">
         <div class="product-card">
+            <img src="splat-sauce.png" alt="Splat Sauce" class="floating-decor splat-over-first">
+            
+            <div class="card-img-placeholder">Burger Img</div>
             <h3>Double Smashburgers</h3>
-            <br><a href="#" class="btn">Order</a>
+            <p>Two crispy patties, melted cheese, secret sauce.</p>
+            <a href="#" class="btn">Order</a>
         </div>
-      <div class="product-card">
-    <img src="transparent-burger.png" alt="Double Smashburger" class="floating-image">
-    <h3>Double Smashburgers</h3>
-    <br><a href="#" class="btn">Order</a>
-</div>
+
         <div class="product-card">
+            <div class="card-img-placeholder">Fries Img</div>
             <h3>Loaded Waffle Fries</h3>
-            <br><a href="#" class="btn">Order</a>
+            <p>Smothered in cheese sauce and chopped bacon.</p>
+            <a href="#" class="btn">Order</a>
         </div>
     </div>
 </div>
 
 <div class="section" style="background: #111; color: white;">
     <h2 class="massive-text" style="font-size: 6vw;">Ever wondered what<br>a food coma feels like?</h2>
+    
     <div class="product-grid">
         <div class="product-card" style="background: #222; color: white;">
+            <img src="giant-fry.png" alt="Giant Fry" class="floating-decor fry-over-third">
+            
+            <div class="card-img-placeholder" style="background: #333;">Shake Img</div>
             <h3>Hand-Spun Shakes</h3>
-            <br><a href="#" class="btn" style="background: white; color: black;">Order</a>
+            <p>Thick, creamy, and made with real ice cream.</p>
+            <a href="#" class="btn" style="background: white; color: black;">Order</a>
         </div>
+
         <div class="product-card" style="background: #222; color: white;">
+            <div class="card-img-placeholder" style="background: #333;">Rings Img</div>
             <h3>Crispy Onion Rings</h3>
-            <br><a href="#" class="btn" style="background: white; color: black;">Order</a>
+            <p>Beer-battered and fried to golden perfection.</p>
+            <a href="#" class="btn" style="background: white; color: black;">Order</a>
         </div>
     </div>
 </div>
 
-<div class="section" style="text-align: center;">
+<div class="section" style="text-align: center; padding-bottom: 150px;">
     <h2 class="massive-text" style="font-size: 5vw;">Whatever craving you want to crush<br>Flying Burgers is your ticket to get there.</h2>
-    <p style="margin-top: 50px;">Thanks for dining with us.</p>
-  
+    <p style="margin-top: 50px; font-weight: bold; font-size: 1.2rem;">Thanks for dining with us.</p>
 </div>
-  
 
 </body>
 </html>
