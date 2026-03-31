@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Flying Burgers</title>
+<style>
+    body {
+        margin: 0;
+        font-family: 'Helvetica Neue', Arial, sans-serif;
+        background-color: #f4f4f0;
+        color: #111;
+        overflow-x: hidden;
+    }
+    header {
+        display: flex;
+        justify-content: space-between;
+        padding: 20px 40px;
+        position: fixed;
+        width: 100%;
+        box-sizing: border-box;
+        mix-blend-mode: difference;
+        color: white;
+        z-index: 100;
+    }
+    .hero {
+        height: 100vh;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        text-align: center;
+        background-color: #ff4500; /* Vibrant burger brand color */
+        color: white;
+    }
+    .massive-text {
+        font-size: 8vw;
+        font-weight: 900;
+        line-height: 0.9;
+        text-transform: uppercase;
+        margin: 0;
+        letter-spacing: -2px;
+    }
+    .marquee-container {
+        display: flex;
+        overflow: hidden;
+        white-space: nowrap;
+        padding: 20px 0;
+        background: #111;
+        color: white;
+    }
+    .section {
+        padding: 100px 40px;
+        display: flex;
+        flex-direction: column;
+        gap: 40px;
+    }
+    .product-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+        gap: 20px;
+    }
+    .product-card {
+        background: white;
+        border-radius: 20px;
+        padding: 40px;
+        text-align: center;
+        transition: transform 0.3s ease;
+    }
+    .product-card:hover {
+        transform: translateY(-10px);
+    }
+    .btn {
+        background: #111;
+        color: white;
+        padding: 15px 30px;
+        border-radius: 30px;
+        text-decoration: none;
+        text-transform: uppercase;
+        font-weight: bold;
+    }
+</style>
+</head>
+<body>
+
+<header>
+    <div>Menu</div>
+    <div style="font-weight: 900; font-size: 1.2rem;">FLYING BURGERS</div>
+    <div>Bag (0)</div>
+</header>
+
+<div class="hero">
+    <h1 class="massive-text">I'm Stuffed!</h1>
+    <p style="font-size: 2vw; margin-top: 20px;">Let me show you where flavor can go.</p>
+</div>
+
+<div class="marquee-container">
+    <h2 style="font-size: 3rem; margin: 0;">SMASHBURGERS • FRIES • SHAKES • SIDES • COMBOS • </h2>
+</div>
+
+<div class="section">
+    <h2 class="massive-text" style="font-size: 6vw;">How about transcending<br>the power of hunger,<br>right now?</h2>
+    <div class="product-grid">
+        <div class="product-card">
+            <h3>Double Smashburgers</h3>
+            <br><a href="#" class="btn">Order</a>
+        </div>
+      <div class="product-card">
+    <img src="transparent-burger.png" alt="Double Smashburger" class="floating-image">
+    <h3>Double Smashburgers</h3>
+    <br><a href="#" class="btn">Order</a>
+</div>
+        <div class="product-card">
+            <h3>Loaded Waffle Fries</h3>
+            <br><a href="#" class="btn">Order</a>
+        </div>
+    </div>
+</div>
+
+<div class="section" style="background: #111; color: white;">
+    <h2 class="massive-text" style="font-size: 6vw;">Ever wondered what<br>a food coma feels like?</h2>
+    <div class="product-grid">
+        <div class="product-card" style="background: #222; color: white;">
+            <h3>Hand-Spun Shakes</h3>
+            <br><a href="#" class="btn" style="background: white; color: black;">Order</a>
+        </div>
+        <div class="product-card" style="background: #222; color: white;">
+            <h3>Crispy Onion Rings</h3>
+            <br><a href="#" class="btn" style="background: white; color: black;">Order</a>
+        </div>
+    </div>
+</div>
+
+<div class="section" style="text-align: center;">
+    <h2 class="massive-text" style="font-size: 5vw;">Whatever craving you want to crush<br>Flying Burgers is your ticket to get there.</h2>
+    <p style="margin-top: 50px;">Thanks for dining with us.</p>
+  
+</div>
+  
+
+</body>
+</html>
