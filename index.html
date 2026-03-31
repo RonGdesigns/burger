@@ -72,13 +72,17 @@
     }
 
     .marquee-container {
-        display: flex;
         overflow: hidden;
         white-space: nowrap;
         padding: 20px 0;
         background: #111;
         color: white;
         width: 100%;
+    }
+
+    .marquee-track {
+        display: flex;
+        width: max-content;
     }
 
     .section {
@@ -320,22 +324,22 @@
             padding: 60px 20px;
         }
 
-        /* --- New Ticker Animation for Mobile --- */
-        .marquee-container {
-            display: block; /* Ensures container takes up the exact width */
+        /* --- Seamless Ticker Animation for Mobile --- */
+        .marquee-track h2 {
+            font-size: 1.8rem !important;
+            padding-right: 10px;
         }
 
-        .marquee-container h2 {
-            display: inline-block;
-            font-size: 1.8rem !important; /* Slightly scaled down for mobile */
-            animation: mobileTicker 12s linear infinite; /* 12s is a nice medium speed */
+        .marquee-track {
+            animation: seamlessTicker 10s linear infinite; 
         }
 
-        @keyframes mobileTicker {
-            0% { transform: translateX(100vw); }
-            100% { transform: translateX(-100%); }
+        @keyframes seamlessTicker {
+            0% { transform: translateX(0); }
+            100% { transform: translateX(-50%); }
         }
     }
+
 </style>
 </head>
 <body>
@@ -358,7 +362,10 @@
 </div>
 
 <div class="marquee-container">
-    <h2 style="font-size: 3rem; margin: 0;">SMASHBURGERS • FRIES • SHAKES • SIDES • COMBOS • </h2>
+    <div class="marquee-track">
+        <h2 style="font-size: 3rem; margin: 0;">SMASHBURGERS • FRIES • SHAKES • SIDES • COMBOS •&nbsp;</h2>
+        <h2 style="font-size: 3rem; margin: 0;">SMASHBURGERS • FRIES • SHAKES • SIDES • COMBOS •&nbsp;</h2>
+    </div>
 </div>
 
 <div class="section">
