@@ -137,6 +137,14 @@
         filter: drop-shadow(0px 15px 15px rgba(0,0,0,0.2));
     }
 
+    /* NEW: The duplicated GIF for the top left of the screen */
+    .burger-top-left {
+        width: 180px;
+        top: 15%;
+        left: 5%;
+        animation: float-reverse 8s ease-in-out infinite; /* Slower, reverse animation */
+    }
+
     /* Splat sauce positioned over the first choice */
     .splat-over-first {
         width: 250px;
@@ -145,7 +153,7 @@
         animation: float-reverse 5s ease-in-out infinite;
     }
 
-    /* NEW: Transparent Burger GIF over the second choice (Waffle Fries) */
+    /* The original transparent Burger GIF over the second choice */
     .burger-over-second {
         width: 220px;
         top: -60px;
@@ -185,6 +193,8 @@
 </header>
 
 <div class="hero">
+    <img src="transparent-burger.png.gif" alt="Floating Burger GIF" class="floating-decor burger-top-left">
+
     <img src="burger.png" alt="Giant Floating Burger" class="hero-burger">
     
     <div style="z-index: 10;">
