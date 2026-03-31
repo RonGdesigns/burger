@@ -6,13 +6,15 @@
 <title>Flying Burgers</title>
 <style>
     /* --- Base Styles --- */
-    body {
+    html, body {
         margin: 0;
+        padding: 0;
         font-family: 'Helvetica Neue', Arial, sans-serif;
         background-color: #f4f4f0;
         color: #111;
-        overflow-x: hidden; /* Prevents unwanted horizontal scrolling */
+        overflow-x: hidden; /* Applies to both html and body to kill the white line */
         width: 100%;
+        max-width: 100%; 
     }
 
     header {
@@ -51,7 +53,7 @@
     /* --- Sections --- */
     .hero {
         height: 100vh;
-        width: 100vw; /* Ensures background fills the width */
+        width: 100%; /* Changed from 100vw to prevent scrollbar overflow */
         display: flex;
         flex-direction: column;
         justify-content: center;
@@ -76,6 +78,7 @@
         padding: 20px 0;
         background: #111;
         color: white;
+        width: 100%;
     }
 
     .section {
@@ -84,6 +87,8 @@
         flex-direction: column;
         gap: 60px;
         position: relative;
+        box-sizing: border-box; /* Added to contain padding within width */
+        width: 100%;
     }
 
     /* --- Products --- */
@@ -225,7 +230,7 @@
         position: fixed;
         top: 0; 
         left: 0; 
-        width: 100vw; 
+        width: 100%; /* Changed from 100vw */
         height: 100vh;
         background-color: #ff4500; 
         z-index: 9999; 
@@ -282,28 +287,26 @@
         }
     }
 
-    /* --- NEW: MOBILE OPTIMIZATIONS (Max-width 768px) --- */
+    /* --- MOBILE OPTIMIZATIONS (Max-width 768px) --- */
     @media (max-width: 768px) {
         .hero {
-            width: 100%; /* Fixes the orange background alignment */
+            width: 100%;
         }
         
         .hero .massive-text {
-            font-size: 15vw; /* Significantly larger on mobile */
+            font-size: 15vw;
         }
 
         .hero-subtext {
-            font-size: 5vw; /* Larger subtext for mobile readability */
+            font-size: 5vw;
             padding: 0 20px;
         }
 
-        /* Shift Burger Top Left even more to the left */
         .burger-top-left {
             left: -10%;
             width: 140px;
         }
 
-        /* Shift Burger Bottom Right even more to the right */
         .burger-bottom-right {
             right: -10%;
             width: 180px;
@@ -316,8 +319,23 @@
         .section {
             padding: 60px 20px;
         }
-    }
 
+        /* --- New Ticker Animation for Mobile --- */
+        .marquee-container {
+            display: block; /* Ensures container takes up the exact width */
+        }
+
+        .marquee-container h2 {
+            display: inline-block;
+            font-size: 1.8rem !important; /* Slightly scaled down for mobile */
+            animation: mobileTicker 12s linear infinite; /* 12s is a nice medium speed */
+        }
+
+        @keyframes mobileTicker {
+            0% { transform: translateX(100vw); }
+            100% { transform: translateX(-100%); }
+        }
+    }
 </style>
 </head>
 <body>
