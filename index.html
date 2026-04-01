@@ -1,6 +1,8 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Flying Burgers</title>
@@ -476,7 +478,83 @@
             bagCountDisplay.textContent = currentItems;
         });
     });
+    // Register GSAP Plugin
+gsap.registerPlugin(ScrollTrigger);
+
+// --- 1. DECONSTRUCTED BURGER SCROLL SEQUENCE ---
+// This assumes the burger parts are stacked using CSS absolute positioning or flexbox
+const burgerTl = gsap.timeline({
+  scrollTrigger: {
+    trigger: ".burger-container",
+    start: "top 80%", // Animation starts when container hits 80% down the viewport
+    end: "center center", // Ends when container is dead center
+    scrub: 1, // Links the animation to the scrollbar with a 1-second smoothing delay
+  }
+});
+
+// We animate 'from' a spread-out state 'to' their natural CSS resting position
+burgerTl.from(".top-bun", { y: -300, rotation: -15, opacity: 0 })
+        .from(".lettuce", { y: -150, rotation: 10, opacity: 0 }, "<0.1") // "<0.1" slightly overlaps the animations
+        .from(".patty", { y: -50, rotation: -5, opacity: 0 }, "<0.1")
+        .from(".bottom-bun", { y: 100, opacity: 0 }, "<0.1");
+
+
+// --- 2. CUSTOM CURSOR LOGIC ---
+const cursor = document.querySelector('.custom-cursor');
+
+// Move cursor with mouse
+window.addEventListener('mousemove', (e) => {
+  gsap.to(cursor, {
+    x: e.clientX,
+    y: e.clientY,
+    duration: 0.1, // Slight delay for a smooth, "heavy" feel
+    ease: "power2.out"
+  });
+});
+
+// Cursor hover effect on all links and buttons
+const interactables = document.querySelectorAll('a, button, .order-btn');
+interactables.forEach(el => {
+  el.addEventListener('mouseenter', () => cursor.classList.add('hover-state'));
+  el.addEventListener('mouseleave', () => cursor.classList.remove('hover-state'));
+});
+
+
+// --- 3. MAGNETIC "ORDER" BUTTONS ---
+const magneticButtons = document.querySelectorAll('.order-btn');
+
+magneticButtons.forEach(btn => {
+  btn.addEventListener('mousemove', (e) => {
+    // Get button's position and dimensions
+    const rect = btn.getBoundingClientRect();
+    const x = e.clientX - rect.left; // Mouse X relative to button
+    const y = e.clientY - rect.top;  // Mouse Y relative to button
+    
+    // Calculate distance from center
+    const centerX = x - rect.width / 2;
+    const centerY = y - rect.height / 2;
+
+    // Move the button towards the mouse (the 0.3 factor limits how far it pulls)
+    gsap.to(btn, {
+      x: centerX * 0.3,
+      y: centerY * 0.3,
+      duration: 0.5,
+      ease: "power2.out"
+    });
+  });
+
+  // Snap back to original position when mouse leaves
+  btn.addEventListener('mouseleave', () => {
+    gsap.to(btn, {
+      x: 0,
+      y: 0,
+      duration: 0.8,
+      ease: "elastic.out(1, 0.3)" // Gives it that satisfying "snap" back
+    });
+  });
+});
 </script>
+    
 
 </body>
 </html>
