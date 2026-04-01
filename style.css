@@ -10,6 +10,58 @@
     from { transform: rotate(0deg); }
     to { transform: rotate(360deg); }
 }
+/* --- FLUID TYPOGRAPHY --- */
+h1 {
+  /* Scales seamlessly from 3rem on mobile to 8rem on desktop */
+  font-size: clamp(3rem, 8vw, 8rem);
+  font-weight: 900;
+  line-height: 1.1;
+  text-transform: uppercase;
+  margin: 0;
+}
+
+h2 {
+  font-size: clamp(2rem, 5vw, 4.5rem);
+  font-weight: 700;
+  line-height: 1.2;
+}
+
+/* --- CUSTOM CURSOR --- */
+body {
+  cursor: none; /* Hide the native cursor */
+}
+
+.custom-cursor {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 20px;
+  height: 20px;
+  background-color: #ff3300; /* Flying Burgers brand color */
+  border-radius: 50%;
+  pointer-events: none; /* Crucial: lets you click through the cursor */
+  transform: translate(-50%, -50%);
+  z-index: 9999;
+  transition: width 0.2s, height 0.2s, background-color 0.2s;
+  mix-blend-mode: difference; /* Gives it a cool inverse effect over images */
+}
+
+/* Class added via JS when hovering over buttons */
+.custom-cursor.hover-state {
+  width: 60px;
+  height: 60px;
+  background-color: transparent;
+  border: 2px solid #ff3300;
+}
+
+/* --- MAGNETIC BUTTON BASE --- */
+.order-btn {
+  display: inline-block;
+  padding: 15px 30px;
+  /* Will-change optimizes performance for the transform animation */
+  will-change: transform; 
+  cursor: none; /* Ensure native cursor stays hidden on hover */
+}
 
 /* Apply this class to your burger images */
 .floating-image {
